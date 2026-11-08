@@ -1,0 +1,39 @@
+{
+  "applets": [{
+    "lastAccessTime": "2026-11-03T15:03:09.203590Z",
+    "firstAccessTime": "2026-10-30T04:22:28.716Z",
+    "source": {
+      "sourceType": "SPANNER",
+      "spanner": {
+        "id": "d636b85c-a072-4c3e-a478-d334ad0f29b9"
+      }
+    },
+    "name": "Remix PLUTUS Cable Production \u0026 Requisition System",
+    "description": "Comprehensive cable manufacturing management system covering order management, process cards, engineering calculations, purchase sheets, packing lists, requisition slips, and inventory management.",
+    "runtimeType": 1
+  }, {
+    "lastAccessTime": "2026-10-30T07:08:07.151037Z",
+    "firstAccessTime": "2026-10-30T06:42:56.882701Z",
+    "source": {
+      "sourceType": "SPANNER",
+      "spanner": {
+        "id": "6c42a75b-e625-4142-a229-00ad4bceb433"
+      }
+    },
+    "name": " PLUTUS Cable Production \u0026 Requisition System",
+    "description": "Comprehensive cable manufacturing management system covering order management, process cards, engineering calculations, purchase sheets, packing lists, requisition slips, and inventory management.",
+    "runtimeType": 1
+  }, {
+    "lastAccessTime": "2026-10-30T05:48:54.877765Z",
+    "firstAccessTime": "2026-10-29T20:13:25.565524Z",
+    "source": {
+      "sourceType": "SPANNER",
+      "spanner": {
+        "id": "7401aa40-132a-4650-8fc1-d5750a3bde3c"
+      }
+    },
+    "name": "PLUTUS Cable Production \u0026 Requisition System",
+    "description": "Comprehensive cable manufacturing management system covering order management, process cards, engineering calculations, purchase sheets, packing lists, requisition slips, and inventory management.",
+    "runtimeType": 1
+  }]
+}

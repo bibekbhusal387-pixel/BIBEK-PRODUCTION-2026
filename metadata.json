@@ -1,0 +1,8 @@
+{
+  "name": "Remix PLUTUS Cable Production \u0026 Requisition System",
+  "description": "Comprehensive cable manufacturing management system covering order management, process cards, engineering calculations, purchase sheets, packing lists, requisition slips, and inventory management.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "entities": {
+    "WorkspaceSnapshot": {
+      "title": "WorkspaceSnapshot",
+      "description": "Cloud backup and workspace synchronization document for a PLUTUS Cable Production System user.",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the workspace owner."
+        },
+        "ownerEmail": {
+          "type": "string",
+          "format": "email",
+          "description": "Verified email address of the workspace owner."
+        },
+        "payloadJson": {
+          "type": "string",
+          "description": "Serialized JSON snapshot of the user's orders, stock ledger, container plans, and settings."
+        },
+        "orderCount": {
+          "type": "integer",
+          "description": "Total number of orders in the snapshot."
+        },
+        "updatedAtIso": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO-8601 timestamp string of the client snapshot."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when the workspace document was first created."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when the workspace document was last updated."
+        }
+      },
+      "required": [
+        "ownerId",
+        "ownerEmail",
+        "payloadJson",
+        "orderCount",
+        "updatedAtIso",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/workspaces/{userId}": {
+      "schema": "#/entities/WorkspaceSnapshot",
+      "description": "Per-user workspace snapshot document keyed by the user's Firebase Auth UID."
+    }
+  }
+}

@@ -1,0 +1,93 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // =========================================================================
+    // Helper Functions
+    // =========================================================================
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isVerifiedUser() {
+      return isSignedIn() && request.auth.token.email_verified == true;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() >= 1 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function isOwner(userId) {
+      return isVerifiedUser() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isVerifiedUser() && request.auth.token.email == 'bibekbhusal387@gmail.com';
+    }
+
+    function isValidWorkspaceSnapshot(data, userId) {
+      let allowedKeys = [
+        'ownerId',
+        'ownerEmail',
+        'payloadJson',
+        'orderCount',
+        'updatedAtIso',
+        'createdAt',
+        'updatedAt'
+      ];
+      return data.keys().hasAll(allowedKeys)
+        && data.keys().hasOnly(allowedKeys)
+        && data.ownerId is string
+        && data.ownerId == userId
+        && data.ownerId == request.auth.uid
+        && data.ownerEmail is string
+        && data.ownerEmail.size() >= 3
+        && data.ownerEmail.size() <= 256
+        && data.payloadJson is string
+        && data.payloadJson.size() >= 2
+        && data.payloadJson.size() <= 950000
+        && data.orderCount is int
+        && data.orderCount >= 0
+        && data.orderCount <= 50000
+        && data.updatedAtIso is string
+        && data.updatedAtIso.size() >= 10
+        && data.updatedAtIso.size() <= 64
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp;
+    }
+
+    // =========================================================================
+    // Collection Rules: /workspaces/{userId}
+    // =========================================================================
+
+    match /workspaces/{userId} {
+      allow get: if isValidId(userId) && (isOwner(userId) || isAdmin());
+      allow list: if isAdmin();
+
+      allow create: if isValidId(userId)
+        && isOwner(userId)
+        && isValidWorkspaceSnapshot(request.resource.data, userId)
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.updatedAt == request.time;
+
+      allow update: if isValidId(userId)
+        && isOwner(userId)
+        && isValidWorkspaceSnapshot(request.resource.data, userId)
+        && request.resource.data.ownerId == resource.data.ownerId
+        && request.resource.data.createdAt == resource.data.createdAt
+        && request.resource.data.updatedAt == request.time;
+
+      allow delete: if isValidId(userId) && (isOwner(userId) || isAdmin());
+    }
+
+    // =========================================================================
+    // Default Deny Catch-All
+    // =========================================================================
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
